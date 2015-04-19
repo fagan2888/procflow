@@ -1,0 +1,33 @@
+This generates a data dependent process, the layout of how the processes
+are chained together is specified in the Makefile. The Makefile defines
+where data is read from and where intermittent data and graphs are written
+to as well as where final output is written to. The configuration for each
+process' parameters is defined in ./code/config.py however this is configurable
+in the Makefile. The default layout is defined as follows:
+
+./data
+------
+Folder containing all input data to the processes
+
+./build
+-------
+Folder containing all final output
+
+./build/monitoring
+------------------
+Folder containing all intermittent process monitoring info
+
+./code
+------
+Folder containing all defined processes. A process is any python module which
+does a set of things with input data and generates output data. Each process
+should be able to be run as a command line utility (and therefore called
+through make) and output data to some persistent format. The types in input
+and output for each process should be centrally defined in the mio.py module.
+The specific parameters for a process should be defined in config in config.py.
+This is a dictionary consisting of key-value pairs where the key should be the
+name of the module for which these are the parameters and the values are
+key-value pairs of the function parameters and values. This naming convention
+is not enforced but is best practice, the chaining will work as long as the
+config.py is consitent with the parameter reading in the
+if __name__ == "__main__": bloc of the relevant process module
